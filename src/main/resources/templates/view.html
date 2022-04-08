@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Detailed Post</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container" align="center">
+
+
+    <form action="#" th:action="@{/showPost}" th:object="${posts}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
+        <th:block th:each="posts : ${posts}">
+            <p th:text=${posts.title}></p>
+            <p th:text=${posts.publishedAt}></p>
+            <td th:text= "${posts.author}"></td>
+            <br><br>
+            <hr>
+            <p th:text=${posts.content}></p>
+        </th:block>
+
+    </form>
+
+    <form action="#" th:action="@{/saveComment/{id}(id=${posts.id})}" method="get" th:object="${comments}">
+        <input type="hidden" th:field="${posts.id}" name="postId">
+        <input type="text" name="name" placeholder="Enter your name">
+        <input type="text" name="email" placeholder="Enter your email">
+        <input type="text" name="comment" placeholder="Add comments">
+        <button type="submit" class="btn btn-info col-2"> comment </button>
+    </form>
+
+    <h4>Comments:</h4>
+    <tbody>
+    <tr th:each = "comments:${commentList}">
+        <td th:text= "${comments.name}"></td>
+        <br>
+        <td th:text= "${comments.email}"></td>
+        <br>
+        <td th:text= "${comments.comment}"></td>
+        <br>
+        <td>
+            <a th:href = "@{/showFormForUpdateComment/{id}(id=${comments.id})}" class="btn btn-primary"> Update</a>
+            <a th:href = "@{/deleteComment/{id}(id=${comments.id})}" class="btn btn-danger"> Delete</a>
+        </td>
+        <br>
+        <br>
+    </tr>
+    </tbody>
+
+    <hr>
+
+    <a th:href="@{/}"> Back to Post List</a>
+</div>
+</body>
+
+</html>

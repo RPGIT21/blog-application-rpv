@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/saveComment/{id}(id=${comments.id})}" method="get" th:object="${comments}">
+    <input type="hidden" th:value="${comments.id}" name="postId">
+    <input type="text" name="*{name}" placeholder="Your Name Please">
+    <input type="email" name="*{email}" placeholder="Your Email Please">
+    <input type="text" name="comment" placeholder="Add comments">
+    <button type="submit" class="btn btn-info col-2"> comment </button>
+</form>
+</body>
+</html>
