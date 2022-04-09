@@ -51,10 +51,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/showNewPostForm",
                         "/deleteComment/{id}",
                         "/saveComment/{id}",
+                        "/deleteComment/{id}").hasAnyAuthority("ADMIN", "AUTHOR", "USER")
+                .antMatchers(
                         "/savePost",
                         "/showFormForUpdate/{id}",
-                        "/deletePost/{id}",
-                        "/deleteComment/{id}").hasAnyAuthority("ADMIN", "AUTHOR")
+                        "/deletePost/{id}"
+                        ).hasAnyAuthority("ADMIN", "AUTHOR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
