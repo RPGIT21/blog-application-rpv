@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Blog Application</title>
@@ -8,33 +9,23 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
 
-    <style>
-    .login-button{
-    display:flex;
-    flex-direction:row;
-    justify-content:flex-end;
-    padding:20px;
-    align-items:center;
-    }
-    </style>
+
 </head>
 <body>
 
 
 <div class="container my-2">
     <h1>Post List</h1>
-    <div class="login-button">
-        <button class=" btn btn-primary nav-item"  sec:authorize="!isAuthenticated()" >
-            <a class="btn-primary" th:href="@{/login}">Login</a>
-        </button>
-        <button align="right" class = "btn-danger" sec:authorize="isAuthenticated()">
-            <form  class = "btn-danger" th:action="@{/logout}" method="post">
-                <input class = "btn-danger" type="submit" value="Logout" />
-            </form>
-        </button>
+    <div align="left">
+        <a th:href = "@{/login}" class="btn btn-primary btn-sm mb-3">login</a>
+    </div>
+    <div align="right">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" />
+        </form>
     </div>
     <div align="left">
-    <a th:href="@{'/page/' + ${currentPage} + '?sortPost=publishedAt&sortDir=' + ${reverseSortDir}}" class="btn btn-primary btn-sm mb-3">Sort</a>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortPost=publishedAt&sortDir=' + ${reverseSortDir}}" class="btn btn-primary btn-sm mb-3">Sort</a>
     </div>
 
     <form action="#" th:action="@{/filter}" method="get">
@@ -50,7 +41,7 @@
     </form>
     <br><br>
     <form th:action="@{/filterByTag}" method="get" th:each="property: ${filter}"
-            th:if="${property}==tags">
+          th:if="${property}==tags">
         <input type="text" th:name="tags">
         <input type="submit" value="filter">
     </form>
@@ -76,30 +67,30 @@
 
     <table border="1" class = "table table-striped table-responsive-md">
         <thead>
-            <tr>
-                <th>
-                        Title</a>
-                </th>
+        <tr>
+            <th>
+                Title</a>
+            </th>
 
-                <th>
-                        Content</a>
-                </th>
-                <th>Actions</th>
-            </tr>
+            <th>
+                Content</a>
+            </th>
+            <th>Actions</th>
+        </tr>
         </thead>
 
         <tbody>
-            <tr th:each = "posts : ${listOfPosts}">
-                <td th:text= "${posts.title}"></td>
-                <td th:text = "${posts.content}"></td>
-                <td>
+        <tr th:each = "posts : ${listOfPosts}">
+            <td th:text= "${posts.title}"></td>
+            <td th:text = "${posts.content}"></td>
+            <td>
 
-                    <a th:href = "@{/showFormForUpdate/{id}(id=${posts.id})}" class="btn btn-primary"> Update</a>
-                    <a th:href = "@{/deletePost/{id}(id=${posts.id})}" class="btn btn-danger"> Delete</a>
+                <a th:href = "@{/showFormForUpdate/{id}(id=${posts.id})}" class="btn btn-primary"> Update</a>
+                <a th:href = "@{/deletePost/{id}(id=${posts.id})}" class="btn btn-danger"> Delete</a>
 
-                    <a th:href = "@{/showPost/{id}(id=${posts.id})}" class="btn btn-primary"> Show Post</a>
-                </td>
-            </tr>
+                <a th:href = "@{/showPost/{id}(id=${posts.id})}" class="btn btn-primary"> Show Post</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 
